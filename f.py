@@ -66,7 +66,7 @@ def get_transaction_count(pubkey):
         "jsonrpc": "2.0",
         "id": 1,
         "method": "getSignaturesForAddress",
-        "params": [pubkey, {"limit": 50000}],
+        "params": [pubkey, {"limit": 100}],
     }
     response = requests.post(rpc_url, json=payload)
     if response.status_code == 200 and "result" in response.json():
@@ -112,7 +112,7 @@ async def monitor_wallets():
                         if account not in processed_wallets:
                             processed_wallets.add(account)
                             tx_count = get_transaction_count(account)
-                            if tx_count < 50000:
+                            if tx_count < 100:
                                 print(f"New wallet detected with < 100 transactions: {account}")
                                 bot.send_message(chat_id=telegram_user_id, text=account)
 
